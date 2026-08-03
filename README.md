@@ -1,4 +1,4 @@
-Тест конвейера разработки
+Тест конвейера разработки: LLM Ornith-1.0-35B-APEX-I-Balanced (125k) + OpenCode + mattpocock/skills
 
 npx skills@latest add mattpocock/skills, дальше /setup-matt-pocock-skills один раз на репозиторий.
 
