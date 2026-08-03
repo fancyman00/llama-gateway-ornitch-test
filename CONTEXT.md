@@ -2,6 +2,10 @@
 
 API gateway that sits between clients and a llama-server (llama.cpp) inference process. Adds custom auth, quotas, and rate limits on top of the OpenAI-compatible chat completions API.
 
+## Issue Tracking
+
+**Issue tracker**: GitHub Issues (`fancyman00/llama-gateway-ornitch-test`). Use `gh issue list`, `gh issue create`, `gh issue close` for all ticket operations. The local `.scratch/` directory is for reference only — the source of truth is GitHub.
+
 ## Language
 
 **Gateway**:
