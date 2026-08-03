@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -62,7 +62,7 @@ def sample_api_key():
         key_hash="hashed_secret_value",
         key_prefix="lgk_",
         is_active=True,
-        created_at=datetime(2024, 1, 1, tzinfo=timezone.utc),
+        created_at=datetime(2024, 1, 1, tzinfo=UTC),
     )
 
 
@@ -76,7 +76,7 @@ def sample_request():
         tokens_in=100,
         tokens_out=200,
         duration_ms=1500,
-        timestamp=datetime(2024, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
+        timestamp=datetime(2024, 6, 1, 12, 0, 0, tzinfo=UTC),
         status="success",
     )
 
@@ -87,7 +87,7 @@ def sample_window():
         id="qw-001",
         employee_id="emp-001",
         window_type=QuotaWindow.WINDOW_DAILY,
-        window_start=datetime(2024, 6, 1, 0, 0, 0, tzinfo=timezone.utc),
+        window_start=datetime(2024, 6, 1, 0, 0, 0, tzinfo=UTC),
         tokens_used=1000,
     )
 
@@ -98,6 +98,6 @@ def sample_bucket():
         id="rb-001",
         employee_id="emp-001",
         window_type=RateLimitBucket.WINDOW_1MIN,
-        window_start=datetime(2024, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
+        window_start=datetime(2024, 6, 1, 12, 0, 0, tzinfo=UTC),
         request_count=50,
     )

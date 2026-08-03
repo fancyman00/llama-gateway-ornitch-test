@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -44,7 +44,7 @@ async def test_list_employees_returns_all(db: SQLiteDatabaseAdapter, sample_empl
 async def test_update_employee_changes_values(db: SQLiteDatabaseAdapter, sample_employee: Employee):
     await db.create_employee(sample_employee)
     sample_employee.name = "Alice Updated"
-    sample_employee.updated_at = datetime.now(timezone.utc)
+    sample_employee.updated_at = datetime.now(UTC)
     result = await db.update_employee(sample_employee)
     assert result.name == "Alice Updated"
     retrieved = await db.get_employee("emp-001")

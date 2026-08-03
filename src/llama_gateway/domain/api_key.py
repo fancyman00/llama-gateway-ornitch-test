@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 class ApiKey:
@@ -20,7 +20,7 @@ class ApiKey:
         self.key_hash = key_hash
         self.key_prefix = key_prefix
         self.is_active = is_active
-        self.created_at = created_at or datetime.now(timezone.utc)
+        self.created_at = created_at or datetime.now(UTC)
         self.last_used_at = last_used_at
 
     def revoke(self) -> None:

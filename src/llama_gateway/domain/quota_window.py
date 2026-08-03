@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 class QuotaWindow:
@@ -22,7 +22,7 @@ class QuotaWindow:
         self.id = id or str(uuid.uuid4())
         self.employee_id = employee_id
         self.window_type = window_type
-        self.window_start = window_start or datetime.now(timezone.utc)
+        self.window_start = window_start or datetime.now(UTC)
         self.tokens_used = tokens_used
 
     def add_tokens(self, count: int) -> None:

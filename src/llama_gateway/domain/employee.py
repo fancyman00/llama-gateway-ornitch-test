@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 class Employee:
@@ -24,13 +24,13 @@ class Employee:
         self.quota_hourly = quota_hourly
         self.quota_daily = quota_daily
         self.quota_weekly = quota_weekly
-        self.created_at = created_at or datetime.now(timezone.utc)
-        self.updated_at = updated_at or datetime.now(timezone.utc)
+        self.created_at = created_at or datetime.now(UTC)
+        self.updated_at = updated_at or datetime.now(UTC)
 
     def deactivate(self) -> None:
         self.is_active = False
-        self.updated_at = datetime.now(timezone.utc)
+        self.updated_at = datetime.now(UTC)
 
     def activate(self) -> None:
         self.is_active = True
-        self.updated_at = datetime.now(timezone.utc)
+        self.updated_at = datetime.now(UTC)

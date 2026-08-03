@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import UTC
+
 import pytest
 
 from llama_gateway.domain.employee import Employee
@@ -28,9 +30,9 @@ async def test_upsert_rate_limit_bucket_updates_existing(db: SQLiteDatabaseAdapt
 
 @pytest.mark.asyncio
 async def test_get_rate_limit_bucket_returns_none_for_missing(db: SQLiteDatabaseAdapter):
-    from datetime import datetime, timezone
+    from datetime import datetime
     result = await db.get_rate_limit_bucket(
-        "emp-001", RateLimitBucket.WINDOW_1MIN, datetime(2024, 1, 1, tzinfo=timezone.utc)
+        "emp-001", RateLimitBucket.WINDOW_1MIN, datetime(2024, 1, 1, tzinfo=UTC)
     )
     assert result is None
 

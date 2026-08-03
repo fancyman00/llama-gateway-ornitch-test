@@ -4,9 +4,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from llama_gateway.application.dto.employee import EmployeeCreate
-from llama_gateway.application.service.employee_service import EmployeeService
 from llama_gateway.application.service.api_key_service import ApiKeyService
+from llama_gateway.application.service.employee_service import EmployeeService
 from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
 from llama_gateway.presentation.routes.admin_routes import router as admin_router
 
@@ -44,8 +43,8 @@ def _make_test_app(
     application.include_router(admin_router, prefix="/admin", tags=["admin"])
 
     from llama_gateway.presentation.routes.admin_routes import (
-        _get_employee_service,
         _get_api_key_service,
+        _get_employee_service,
     )
 
     application.dependency_overrides[_get_employee_service] = lambda: employee_service

@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
-from llama_gateway.application.ports.database import DatabaseAdapter
 from llama_gateway.application.dto.employee import EmployeeCreate, EmployeeUpdate
+from llama_gateway.application.ports.database import DatabaseAdapter
 from llama_gateway.domain.employee import Employee
 
 
@@ -12,7 +12,7 @@ class EmployeeService:
         self._db = db
 
     async def create(self, dto: EmployeeCreate) -> Employee:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         employee = Employee(
             name=dto.name,
             email=dto.email,
@@ -47,7 +47,7 @@ class EmployeeService:
             existing.quota_daily = dto.quota_daily
         if dto.quota_weekly is not None:
             existing.quota_weekly = dto.quota_weekly
-        existing.updated_at = datetime.now(timezone.utc)
+        existing.updated_at = datetime.now(UTC)
         return await self._db.update_employee(existing)
 
     async def delete(self, employee_id: str) -> bool:

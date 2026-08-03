@@ -1,10 +1,14 @@
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 
-from llama_gateway.application.dto.api_key import ApiKeyCreateRequest, ApiKeyCreateResponse, ApiKeyResponse
+from llama_gateway.application.dto.api_key import (
+    ApiKeyCreateRequest,
+    ApiKeyCreateResponse,
+    ApiKeyResponse,
+)
 from llama_gateway.application.dto.employee import EmployeeCreate, EmployeeResponse, EmployeeUpdate
 from llama_gateway.application.service.api_key_service import ApiKeyService
 from llama_gateway.application.service.employee_service import EmployeeService
@@ -14,7 +18,7 @@ router = APIRouter()
 
 
 def _get_db(request: Request) -> SQLiteDatabaseAdapter:
-    return request.app.state.db
+    return cast(SQLiteDatabaseAdapter, request.app.state.db)
 
 
 def _get_employee_service(request: Request) -> EmployeeService:

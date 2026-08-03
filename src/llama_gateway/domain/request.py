@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 class Request:
@@ -25,7 +25,7 @@ class Request:
         self.tokens_in = tokens_in
         self.tokens_out = tokens_out
         self.duration_ms = duration_ms
-        self.timestamp = timestamp or datetime.now(timezone.utc)
+        self.timestamp = timestamp or datetime.now(UTC)
         self.status = status
         self.session_id = session_id
 

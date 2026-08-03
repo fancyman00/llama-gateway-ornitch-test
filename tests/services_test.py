@@ -4,12 +4,10 @@ from dataclasses import dataclass
 
 import pytest
 
-from llama_gateway.domain.employee import Employee
-from llama_gateway.domain.api_key import ApiKey
-from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
 from llama_gateway.application.dto.employee import EmployeeCreate, EmployeeUpdate
-from llama_gateway.application.service.employee_service import EmployeeService
 from llama_gateway.application.service.api_key_service import ApiKeyService
+from llama_gateway.application.service.employee_service import EmployeeService
+from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
 
 
 @dataclass
@@ -19,8 +17,8 @@ class _KeyCreateDto:
 
 @pytest.fixture
 async def db():
-    import tempfile
     import os
+    import tempfile
 
     fd, db_file = tempfile.mkstemp(suffix=".db")
     os.close(fd)

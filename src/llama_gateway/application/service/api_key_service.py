@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import secrets
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
-from llama_gateway.application.ports.database import DatabaseAdapter
 from llama_gateway.application.dto.api_key import ApiKeyCreateRequest
+from llama_gateway.application.ports.database import DatabaseAdapter
 from llama_gateway.domain.api_key import ApiKey
-from llama_gateway.domain.employee import Employee
 
 
 class ApiKeyService:
@@ -37,7 +36,7 @@ class ApiKeyService:
             key_hash=key_hash,
             key_prefix=key_prefix,
             is_active=True,
-            created_at=datetime.now(timezone.utc),
+            created_at=datetime.now(UTC),
         )
         created = await self._db.create_api_key(api_key)
         return created, raw_key

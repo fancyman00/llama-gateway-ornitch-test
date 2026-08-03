@@ -5,9 +5,9 @@ from datetime import datetime
 
 from llama_gateway.domain.api_key import ApiKey
 from llama_gateway.domain.employee import Employee
+from llama_gateway.domain.quota_window import QuotaWindow
 from llama_gateway.domain.rate_limit_bucket import RateLimitBucket
 from llama_gateway.domain.request import Request
-from llama_gateway.domain.quota_window import QuotaWindow
 
 
 class DatabaseAdapter(ABC):

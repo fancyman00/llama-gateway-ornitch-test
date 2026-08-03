@@ -1,24 +1,23 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import selectinload
 
 from llama_gateway.application.ports.database import DatabaseAdapter
 from llama_gateway.domain.api_key import ApiKey
 from llama_gateway.domain.employee import Employee
-from llama_gateway.domain.rate_limit_bucket import RateLimitBucket
 from llama_gateway.domain.quota_window import QuotaWindow
+from llama_gateway.domain.rate_limit_bucket import RateLimitBucket
 from llama_gateway.domain.request import Request
 from llama_gateway.infrastructure.database.models import (
     ApiKeyModel,
     EmployeeModel,
+    QuotaWindowModel,
     RateLimitBucketModel,
     RequestModel,
-    QuotaWindowModel,
 )
 
 if TYPE_CHECKING:

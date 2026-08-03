@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
+from typing import cast
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,7 +13,7 @@ from llama_gateway.presentation.routes.admin_routes import router as admin_route
 
 
 def _get_db(request: Request) -> SQLiteDatabaseAdapter:
-    return request.app.state.db
+    return cast(SQLiteDatabaseAdapter, request.app.state.db)
 
 
 def create_app() -> FastAPI:

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-
 from sqlalchemy import Boolean, ForeignKey, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -23,19 +21,19 @@ class EmployeeModel(Base):
     created_at: Mapped[str] = mapped_column(String(32))
     updated_at: Mapped[str] = mapped_column(String(32))
 
-    api_keys: Mapped[list["ApiKeyModel"]] = relationship(
+    api_keys: Mapped[list[ApiKeyModel]] = relationship(
         back_populates="employee",
         cascade="all, delete-orphan",
     )
-    requests: Mapped[list["RequestModel"]] = relationship(
+    requests: Mapped[list[RequestModel]] = relationship(
         back_populates="employee",
         cascade="all, delete-orphan",
     )
-    quota_windows: Mapped[list["QuotaWindowModel"]] = relationship(
+    quota_windows: Mapped[list[QuotaWindowModel]] = relationship(
         back_populates="employee",
         cascade="all, delete-orphan",
     )
-    rate_limit_buckets: Mapped[list["RateLimitBucketModel"]] = relationship(
+    rate_limit_buckets: Mapped[list[RateLimitBucketModel]] = relationship(
         back_populates="employee",
         cascade="all, delete-orphan",
     )
@@ -56,8 +54,8 @@ class ApiKeyModel(Base):
     created_at: Mapped[str] = mapped_column(String(32))
     last_used_at: Mapped[str | None] = mapped_column(String(32), nullable=True)
 
-    employee: Mapped["EmployeeModel"] = relationship(back_populates="api_keys")
-    requests: Mapped[list["RequestModel"]] = relationship(
+    employee: Mapped[EmployeeModel] = relationship(back_populates="api_keys")
+    requests: Mapped[list[RequestModel]] = relationship(
         back_populates="api_key",
     )
 
@@ -84,8 +82,8 @@ class RequestModel(Base):
     status: Mapped[str] = mapped_column(String(32), default="success")
     session_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
 
-    employee: Mapped["EmployeeModel"] = relationship(back_populates="requests")
-    api_key: Mapped["ApiKeyModel"] = relationship(back_populates="requests")
+    employee: Mapped[EmployeeModel] = relationship(back_populates="requests")
+    api_key: Mapped[ApiKeyModel] = relationship(back_populates="requests")
 
 
 class QuotaWindowModel(Base):
@@ -101,7 +99,7 @@ class QuotaWindowModel(Base):
     window_start: Mapped[str] = mapped_column(String(32), nullable=False)
     tokens_used: Mapped[int] = mapped_column(Integer, default=0)
 
-    employee: Mapped["EmployeeModel"] = relationship(back_populates="quota_windows")
+    employee: Mapped[EmployeeModel] = relationship(back_populates="quota_windows")
 
 
 class RateLimitBucketModel(Base):
@@ -117,6 +115,6 @@ class RateLimitBucketModel(Base):
     window_start: Mapped[str] = mapped_column(String(32), nullable=False)
     request_count: Mapped[int] = mapped_column(Integer, default=0)
 
-    employee: Mapped["EmployeeModel"] = relationship(
+    employee: Mapped[EmployeeModel] = relationship(
         back_populates="rate_limit_buckets",
     )
