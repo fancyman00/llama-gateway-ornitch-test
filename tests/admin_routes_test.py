@@ -188,6 +188,28 @@ def test_list_api_keys(client: TestClient):
     assert isinstance(response.json(), list)
 
 
+def test_list_api_keys_filter_by_employee(client: TestClient):
+    emp_a_payload = {"name": "Alice", "email": "alice@example.com"}
+    emp_a_resp = client.post("/admin/employees", json=emp_a_payload)
+    emp_a_id = emp_a_resp.json()["id"]
+
+    emp_b_payload = {"name": "Bob", "email": "bob@example.com"}
+    emp_b_resp = client.post("/admin/employees", json=emp_b_payload)
+    emp_b_id = emp_b_resp.json()["id"]
+
+    key_payload_a = {"employee_id": emp_a_id}
+    client.post("/admin/api-keys", json=key_payload_a)
+
+    key_payload_b = {"employee_id": emp_b_id}
+    client.post("/admin/api-keys", json=key_payload_b)
+
+    response = client.get(f"/admin/api-keys?employee_id={emp_a_id}")
+    assert response.status_code == 200
+    keys = response.json()
+    assert len(keys) == 1
+    assert keys[0]["employee_id"] == emp_a_id
+
+
 def test_revoke_api_key(client: TestClient):
     emp_payload = {"name": "Alice", "email": "alice@example.com"}
     emp_resp = client.post("/admin/employees", json=emp_payload)

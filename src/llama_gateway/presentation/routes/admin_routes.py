@@ -2,27 +2,28 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 
 from llama_gateway.application.dto.api_key import ApiKeyCreateRequest, ApiKeyCreateResponse, ApiKeyResponse
 from llama_gateway.application.dto.employee import EmployeeCreate, EmployeeResponse, EmployeeUpdate
 from llama_gateway.application.service.api_key_service import ApiKeyService
 from llama_gateway.application.service.employee_service import EmployeeService
+from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
 
 router = APIRouter()
 
 
-def _get_employee_service() -> EmployeeService:
-    from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
+def _get_db(request: Request) -> SQLiteDatabaseAdapter:
+    return request.app.state.db
 
-    db = SQLiteDatabaseAdapter()
+
+def _get_employee_service(request: Request) -> EmployeeService:
+    db = _get_db(request)
     return EmployeeService(db)
 
 
-def _get_api_key_service() -> ApiKeyService:
-    from llama_gateway.infrastructure.database.sqlite import SQLiteDatabaseAdapter
-
-    db = SQLiteDatabaseAdapter()
+def _get_api_key_service(request: Request) -> ApiKeyService:
+    db = _get_db(request)
     return ApiKeyService(db)
 
 
@@ -134,13 +135,10 @@ async def create_api_key(
     summary="List API keys",
 )
 async def list_api_keys(
-    employee_id: str | None = None,
-    service: ApiKeyServiceDep = None,  # type: ignore[assignment]
+    service: ApiKeyServiceDep,
+    employee_id: str | None = Query(default=None),
 ) -> list[ApiKeyResponse]:
-    if employee_id:
-        keys = await service.list_by_employee(employee_id)
-    else:
-        keys = await service.list_by_employee("")
+    keys = await service.list_by_employee(employee_id)
     return [ApiKeyResponse.model_validate(k) for k in keys]
 
 

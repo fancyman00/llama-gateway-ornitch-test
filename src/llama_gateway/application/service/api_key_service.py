@@ -45,7 +45,7 @@ class ApiKeyService:
     async def get(self, key_id: str) -> ApiKey | None:
         return await self._db.get_api_key(key_id)
 
-    async def list_by_employee(self, employee_id: str) -> list[ApiKey]:
+    async def list_by_employee(self, employee_id: str | None = None) -> list[ApiKey]:
         return await self._db.list_api_keys(employee_id=employee_id)
 
     async def revoke(self, key_id: str) -> ApiKey | None:
