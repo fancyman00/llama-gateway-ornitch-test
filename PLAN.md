@@ -46,7 +46,7 @@ See `.scratch/llama-gateway/issues/` for individual ticket files.
 ## Current Status
 
 - **01** — Complete
-- **02** — Not started
+- **02** — Complete
 - **03** — Not started
 - **04** — Not started
 - **05** — Not started

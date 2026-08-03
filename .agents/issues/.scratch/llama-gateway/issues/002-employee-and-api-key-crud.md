@@ -1,6 +1,6 @@
 # Ticket 02: Employee and API Key Management (CRUD)
 
-**Status**: In Progress
+**Status**: Done
 **Phase**: 1 — Foundation
 **Blocked by**: 01 (Complete)
 **Delivers**: Admin can create/read/update/delete Employees and API Keys
